@@ -13,7 +13,6 @@ import {
 } from './common/config/database.config';
 import { DatabaseLogService } from './database-log/database-log.service';
 import dbSource from './common/utils/db-source';
-import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
