@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AspectsService } from './aspects.service';
 import { CreateAspectDto } from './dto/create-aspect.dto';
 import { UpdateAspectDto } from './dto/update-aspect.dto';
+import { successRes } from 'src/common/interceptors';
 
 @Controller('aspects')
 export class AspectsController {
@@ -13,8 +22,9 @@ export class AspectsController {
   }
 
   @Get()
-  findAll() {
-    return this.aspectsService.findAll();
+  async findAll() {
+    const aspects = await this.aspectsService.findAll();
+    return successRes(aspects);
   }
 
   @Get(':id')

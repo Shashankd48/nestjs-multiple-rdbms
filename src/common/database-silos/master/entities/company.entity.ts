@@ -25,10 +25,7 @@ export class Company {
   @OneToMany(() => User, (user) => user.company)
   users: User[];
 
-  @OneToOne(() => TenantDatabase, (tenantDatabase) => tenantDatabase.id, {
-    eager: true,
-    nullable: false,
-  })
+  @OneToOne(() => TenantDatabase, (tenantDatabase) => tenantDatabase.id)
   @JoinColumn()
   tenantDatabase: TenantDatabase;
 

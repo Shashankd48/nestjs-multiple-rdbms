@@ -11,6 +11,7 @@ import {
   appContentDBConfig,
   masterDBConfig,
 } from './common/config/database.config';
+import dbSource from './common/utils/db-source';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import {
     // Master database config (connect to the master database)
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      name: 'masterDB',
+      name: dbSource.MASTER,
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) =>
         masterDBConfig(configService),
@@ -31,7 +32,7 @@ import {
     // Application content database config (connect to the ac database)
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      name: 'appContent',
+      name: dbSource.APP_CONTENT,
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) =>
         appContentDBConfig(configService),
