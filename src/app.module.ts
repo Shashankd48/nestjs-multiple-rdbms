@@ -11,7 +11,9 @@ import {
   appContentDBConfig,
   masterDBConfig,
 } from './common/config/database.config';
+import { DatabaseLogService } from './database-log/database-log.service';
 import dbSource from './common/utils/db-source';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -47,6 +49,6 @@ import dbSource from './common/utils/db-source';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DatabaseLogService],
 })
 export class AppModule {}
