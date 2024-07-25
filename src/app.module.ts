@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MasterDbModule } from './master-db/master-db.module';
-import { AppContentDbModule } from './app-content-db/app-content-db.module';
-import { TenantDbModule } from './tenant-db/tenant-db.module';
 import { ConfigModule } from '@nestjs/config';
+import { CompanyModule } from './company/company.module';
+import { CandidateModule } from './candidate/candidate.module';
+import { AspectsModule } from './aspects/aspects.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -13,9 +14,12 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
       cache: true,
     }),
-    MasterDbModule,
-    AppContentDbModule,
-    TenantDbModule,
+    CompanyModule,
+    CandidateModule,
+
+    AspectsModule,
+
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
