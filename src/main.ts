@@ -10,7 +10,6 @@ async function bootstrap() {
   dotenv.config();
   const configService = new ConfigService();
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
 
   app.enableCors({
     origin: [
