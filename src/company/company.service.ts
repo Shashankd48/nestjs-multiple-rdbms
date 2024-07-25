@@ -31,4 +31,14 @@ export class CompanyService {
   remove(id: number) {
     return `This action removes a #${id} company`;
   }
+
+  async findAllTanantDb() {
+    const queryBuilder = this.companyRepository
+      .createQueryBuilder('company')
+      .leftJoinAndSelect('company.tenantDatabase', 'tenant_database')
+      .where('company.tenantDatabaseId > 0');
+
+    const companies = await queryBuilder.getMany();
+    return companies;
+  }
 }

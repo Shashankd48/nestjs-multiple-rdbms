@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -13,6 +13,7 @@ import {
 } from './common/config/database.config';
 import { DatabaseLogService } from './database-log/database-log.service';
 import dbSource from './common/utils/db-source';
+import { CompanyService } from './company/company.service';
 
 @Module({
   imports: [
@@ -50,4 +51,39 @@ import dbSource from './common/utils/db-source';
   controllers: [AppController],
   providers: [AppService, DatabaseLogService],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly companyService: CompanyService) {}
+
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer.apply(ApiLoggerMiddleware).forRoutes('/v1/*');
+  //   consumer.apply(MultiTenancyRequestModifierMiddleware).forRoutes('*');
+  //   // consumer.apply(LogMiddleware).forRoutes('*');
+  // }
+  async onModuleInit() {
+    console.log('AppModule.onModuleInit() - Start');
+
+    try {
+      // Connect to Master database so we can
+      //  - Read Tenant-DB data
+      const dataSources = await this.companyService.findAllTanantDb();
+      console.log(
+        'AppModule.onModuleInit() - discovered dataSources',
+        dataSources,
+      );
+
+      //  - Initialize Globally Cached TenantDataSourceManager
+      //  - Seed the GCTDSM w/ the retrieved tenant connections
+      // TenantDataSourceManager.getInstance();
+      // TenantDataSourceManager.Populate(dataSources);
+
+      // console.log(
+      //   'The following tenant datasources are registered on application startup:',
+      // );
+      // TenantDataSourceManager.Report();
+    } catch (error) {
+      console.error('Error checking database connection:', error);
+    }
+
+    console.log('AppModule.onModuleInit() - End');
+  }
+}
