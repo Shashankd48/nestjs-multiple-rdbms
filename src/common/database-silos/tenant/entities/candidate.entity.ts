@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class TenantDb {
+export class Candidate {
   @PrimaryGeneratedColumn()
   id: number;
 
