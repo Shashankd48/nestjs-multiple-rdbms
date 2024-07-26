@@ -1,15 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
 import { UpdateCandidateDto } from './dto/update-candidate.dto';
+import dbSource from 'src/common/utils/db-source';
+import { DataSource, Repository } from 'typeorm';
+import { Candidate } from 'src/common/database-silos/tenant/entities/candidate.entity';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class CandidateService {
+  private readonly candidateRepository: Repository<Candidate>;
+
+  constructor(
+    @Inject(dbSource.TENANT)
+    private readonly tenantDataSource: DataSource,
+  ) {
+    console.log('log: tenantDataSource', tenantDataSource);
+    this.candidateRepository = tenantDataSource.getRepository(Candidate);
+    console.log(
+      'CandidateService : constructor() injected w/ DataSource for :',
+      this.candidateRepository.manager.connection.options.database,
+    );
+  }
+
   create(createCandidateDto: CreateCandidateDto) {
     return 'This action adds a new candidate';
   }
 
-  findAll() {
-    return `This action returns all candidate`;
+  async findAll() {
+    return await this.candidateRepository.find();
   }
 
   findOne(id: number) {

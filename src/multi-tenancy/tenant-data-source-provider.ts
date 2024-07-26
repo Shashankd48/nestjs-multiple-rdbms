@@ -22,6 +22,9 @@ export const TenantDataSourceProvider: { [key: string]: Provider } = {
 
       // Get MultiTenancyCompanyId from Request object, and use it to retrieve the correct datasource
       const currentCompanyId: number | null = req.CurrentCompanyId;
+
+      console.log('multi-tenancy-provider : currentCompanyId > ', req.user);
+
       if (currentCompanyId) {
         console.log(
           ' - useFactory() - retrieving DS for companyId :',

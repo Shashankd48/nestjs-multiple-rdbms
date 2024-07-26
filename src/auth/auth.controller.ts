@@ -24,7 +24,7 @@ export class AuthController {
 
     const { accessToken } = await this.authService.createTokens(
       user,
-      null,
+      loginDto.company,
       null,
     );
 
