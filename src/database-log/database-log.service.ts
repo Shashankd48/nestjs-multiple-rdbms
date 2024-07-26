@@ -17,7 +17,7 @@ export class DatabaseLogService implements OnModuleInit {
 
   async onModuleInit() {
     this.logConnectionStatus(this.masterDBDataSource, dbSource.MASTER);
-    this.logConnectionStatus(this.appContentDBDataSource, dbSource.TENANT);
+    this.logConnectionStatus(this.appContentDBDataSource, dbSource.APP_CONTENT);
   }
 
   private logConnectionStatus(dataSource: DataSource, connectionName: string) {

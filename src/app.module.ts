@@ -15,9 +15,13 @@ import { DatabaseLogService } from './database-log/database-log.service';
 import dbSource from './common/utils/db-source';
 import { CompanyService } from './company/company.service';
 import TenantDataSourceManager from './multi-tenancy/tenant-data-source-manager';
+import { DataSource, Repository } from 'typeorm';
+import { MultiTenancyModule } from './multi-tenancy/multi-tenancy.module';
+import { TanantDatabaseModule } from './tanant-database/tanant-database.module';
 
 @Module({
   imports: [
+    Repository,
     ConfigModule.forRoot({
       envFilePath: ['.env.local', '.env.production', '.env.development'],
       isGlobal: true,
@@ -48,9 +52,20 @@ import TenantDataSourceManager from './multi-tenancy/tenant-data-source-manager'
     AspectsModule,
 
     UsersModule,
+
+    MultiTenancyModule,
+
+    TanantDatabaseModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DatabaseLogService],
+  providers: [
+    AppService,
+    DatabaseLogService,
+    {
+      provide: DataSource,
+      useClass: TenantDataSourceManager,
+    },
+  ],
 })
 export class AppModule implements OnModuleInit {
   constructor(private readonly companyService: CompanyService) {}

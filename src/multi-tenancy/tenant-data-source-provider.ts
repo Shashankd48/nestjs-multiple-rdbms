@@ -4,22 +4,20 @@ import { REQUEST } from '@nestjs/core';
 import { DataSource } from 'typeorm';
 
 import TenantDataSourceManager from './tenant-data-source-manager';
+import dbSource from 'src/common/utils/db-source';
 
 export const TenantDataSourceProvider: { [key: string]: Provider } = {
   [Scope.DEFAULT]: {
-    provide: 'tenant_data_source',
+    provide: dbSource.TENANT,
     useFactory: (): null => {
       return null;
     },
   },
   [Scope.REQUEST]: {
-    provide: 'tenant_data_source',
+    provide: dbSource.TENANT,
     inject: [REQUEST, ConfigService],
     scope: Scope.REQUEST,
-    useFactory: async (
-      req,
-      configService: ConfigService,
-    ): Promise<DataSource | null> => {
+    useFactory: async (req): Promise<DataSource | null> => {
       console.log('multi-tenancy-provider : useFactory > ');
 
       // Get MultiTenancyCompanyId from Request object, and use it to retrieve the correct datasource
