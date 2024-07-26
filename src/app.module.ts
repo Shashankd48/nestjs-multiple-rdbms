@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { MiddlewareConsumer, Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -20,6 +20,10 @@ import { MultiTenancyModule } from './multi-tenancy/multi-tenancy.module';
 import { TanantDatabaseModule } from './tanant-database/tanant-database.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtService } from '@nestjs/jwt';
+import {
+  ApiLoggerMiddleware,
+  MultiTenancyRequestModifierMiddleware,
+} from './common/middlewares';
 
 @Module({
   imports: [
@@ -75,11 +79,11 @@ import { JwtService } from '@nestjs/jwt';
 export class AppModule implements OnModuleInit {
   constructor(private readonly companyService: CompanyService) {}
 
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer.apply(ApiLoggerMiddleware).forRoutes('/v1/*');
-  //   consumer.apply(MultiTenancyRequestModifierMiddleware).forRoutes('*');
-  //   // consumer.apply(LogMiddleware).forRoutes('*');
-  // }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ApiLoggerMiddleware).forRoutes('/v1/*');
+    consumer.apply(MultiTenancyRequestModifierMiddleware).forRoutes('*');
+    // consumer.apply(LogMiddleware).forRoutes('*');
+  }
   async onModuleInit() {
     console.log('AppModule.onModuleInit() - Start');
 

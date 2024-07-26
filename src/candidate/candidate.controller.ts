@@ -14,13 +14,17 @@ import { UpdateCandidateDto } from './dto/update-candidate.dto';
 import { successRes } from 'src/common/interceptors';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/common/guards';
+import { AspectsService } from 'src/aspects/aspects.service';
 
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @ApiTags('Candidate')
 @Controller('candidate')
 export class CandidateController {
-  constructor(private readonly candidateService: CandidateService) {}
+  constructor(
+    private readonly candidateService: CandidateService,
+    private readonly aspectService: AspectsService,
+  ) {}
 
   @Post()
   create(@Body() createCandidateDto: CreateCandidateDto) {
@@ -30,7 +34,17 @@ export class CandidateController {
   @Get()
   async findAll() {
     const candidates = await this.candidateService.findAll();
-    return successRes(candidates);
+
+    let temp = [];
+
+    for (const cand of candidates) {
+      const aspect = await this.aspectService.findOne({
+        where: { id: cand.aspect },
+      });
+
+      if (aspect) temp.push({ ...cand, aspect });
+    }
+    return successRes(temp);
   }
 
   @Get(':id')

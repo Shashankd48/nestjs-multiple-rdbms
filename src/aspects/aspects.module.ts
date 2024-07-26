@@ -9,5 +9,6 @@ import dbSource from 'src/common/utils/db-source';
   imports: [TypeOrmModule.forFeature([Aspect], dbSource.APP_CONTENT)],
   controllers: [AspectsController],
   providers: [AspectsService],
+  exports: [AspectsService],
 })
 export class AspectsModule {}

@@ -65,7 +65,9 @@ export default class TenantDataSourceManager {
       database: tenantDatabase.databaseName,
       synchronize: false,
       //  Include only entities defined in the 'tenant' database-silo
-      entities: ['dist/**/database-silos/tenant/entities/*.entity.{ts,js}'],
+      entities: [
+        'dist/**/common/database-silos/tenant/entities/*.entity.{ts,js}',
+      ],
     });
 
     TenantDataSourceManager.instance.dataSources[companyId] = tenantDataSource;

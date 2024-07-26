@@ -29,7 +29,7 @@ export class AspectsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.aspectsService.findOne(+id);
+    return this.aspectsService.findOne({ where: { id: +id } });
   }
 
   @Patch(':id')

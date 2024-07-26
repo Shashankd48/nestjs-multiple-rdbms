@@ -3,7 +3,7 @@ import { CreateAspectDto } from './dto/create-aspect.dto';
 import { UpdateAspectDto } from './dto/update-aspect.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Aspect } from 'src/common/database-silos/app-content/entities/aspect.entity';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import dbSource from 'src/common/utils/db-source';
 
 @Injectable()
@@ -21,8 +21,8 @@ export class AspectsService {
     return await this.aspectRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} aspect`;
+  async findOne(params: FindOneOptions<Aspect>) {
+    return await this.aspectRepository.findOne(params);
   }
 
   update(id: number, updateAspectDto: UpdateAspectDto) {
