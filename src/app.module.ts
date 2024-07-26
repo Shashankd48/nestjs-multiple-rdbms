@@ -14,6 +14,7 @@ import {
 import { DatabaseLogService } from './database-log/database-log.service';
 import dbSource from './common/utils/db-source';
 import { CompanyService } from './company/company.service';
+import TenantDataSourceManager from './multi-tenancy/tenant-data-source-manager';
 
 @Module({
   imports: [
@@ -73,13 +74,13 @@ export class AppModule implements OnModuleInit {
 
       //  - Initialize Globally Cached TenantDataSourceManager
       //  - Seed the GCTDSM w/ the retrieved tenant connections
-      // TenantDataSourceManager.getInstance();
-      // TenantDataSourceManager.Populate(dataSources);
+      TenantDataSourceManager.getInstance();
+      TenantDataSourceManager.Populate({ companies: dataSources });
 
-      // console.log(
-      //   'The following tenant datasources are registered on application startup:',
-      // );
-      // TenantDataSourceManager.Report();
+      console.log(
+        'The following tenant datasources are registered on application startup:',
+      );
+      TenantDataSourceManager.Report();
     } catch (error) {
       console.error('Error checking database connection:', error);
     }

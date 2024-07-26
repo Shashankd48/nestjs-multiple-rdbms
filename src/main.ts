@@ -12,15 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: [
-      configService.get<string>('LOCAL_DOMAIN') || '',
-      configService.get<string>('PROD_DOMAIN') || '',
-      configService.get<string>('DEV_DOMAIN') || '',
-      configService.get<string>('PUBLIC_SITE_DOMAIN') || '',
-      configService.get<string>('DEMO_MATCHCARE_DOMAIN') || '',
-      configService.get<string>('GITHUB_ACTIONS_WEBHOOK') || '',
-      configService.get<string>('DEMO_UTRECHT_DOMAIN') || '',
-    ],
+    origin: [configService.get<string>('LOCAL_DOMAIN') || ''],
     credentials: true,
   });
 
@@ -28,10 +20,12 @@ async function bootstrap() {
 
   // Swagger Documentation
   const config = new DocumentBuilder()
-    .setTitle('Matchare Backend')
-    .setDescription('The matchcare API description')
+    .setTitle('Demo Backend')
+    .setDescription(
+      'Multi database and dynamic request based connection with db',
+    )
     .setVersion('1.0')
-    .addTag('Matchare')
+    .addTag('Demo')
     .addBearerAuth()
     .build();
 
