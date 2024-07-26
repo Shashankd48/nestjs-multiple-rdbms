@@ -24,6 +24,9 @@ export class User {
   @JoinColumn()
   company: Company;
 
+  @Column({ nullable: true })
+  demo: string;
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
