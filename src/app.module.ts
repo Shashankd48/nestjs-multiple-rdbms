@@ -18,6 +18,8 @@ import TenantDataSourceManager from './multi-tenancy/tenant-data-source-manager'
 import { DataSource, Repository } from 'typeorm';
 import { MultiTenancyModule } from './multi-tenancy/multi-tenancy.module';
 import { TanantDatabaseModule } from './tanant-database/tanant-database.module';
+import { AuthModule } from './auth/auth.module';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -56,11 +58,14 @@ import { TanantDatabaseModule } from './tanant-database/tanant-database.module';
     MultiTenancyModule,
 
     TanantDatabaseModule,
+
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
     DatabaseLogService,
+    JwtService,
     {
       provide: DataSource,
       useClass: TenantDataSourceManager,

@@ -9,5 +9,6 @@ import dbSource from 'src/common/utils/db-source';
   imports: [TypeOrmModule.forFeature([User], dbSource.MASTER)],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}
