@@ -13,7 +13,7 @@ export class CandidateService {
     @Inject(dbSource.TENANT)
     private readonly tenantDataSource: DataSource,
   ) {
-    this.candidateRepository = tenantDataSource.getRepository(Candidate);
+    this.candidateRepository = this.tenantDataSource.getRepository(Candidate);
     console.log(
       'CandidateService : constructor() injected w/ DataSource for :',
       this.candidateRepository.manager.connection.options.database,
