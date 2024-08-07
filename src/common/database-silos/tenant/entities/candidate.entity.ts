@@ -15,4 +15,7 @@ export class Candidate {
   // Relation to application contnent ->  app-content-db table
   @Column()
   aspect: number;
+
+  @Column()
+  about: string;
 }

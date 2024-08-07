@@ -63,7 +63,7 @@ export default class TenantDataSourceManager {
       username: tenantDatabase.databaseUser,
       password: tenantDatabase.databasePassword,
       database: tenantDatabase.databaseName,
-      synchronize: false,
+      synchronize: true,
       //  Include only entities defined in the 'tenant' database-silo
       entities: [
         'dist/**/common/database-silos/tenant/entities/*.entity.{ts,js}',
