@@ -28,7 +28,6 @@ input UpdateStudentInput {
 }
 
 input CreateStudentInput {
-  id: ID!
   name: String!
   age: Float!
   course: String!

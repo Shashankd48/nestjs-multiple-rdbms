@@ -38,7 +38,7 @@ async function bootstrap() {
   });
 
   // Global response interceptor
-  app.useGlobalInterceptors(new ResponseInterceptor());
+  // app.useGlobalInterceptors(new ResponseInterceptor());
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   const port = configService.get<string>('PORT') || '3000';
