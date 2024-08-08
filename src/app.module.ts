@@ -24,9 +24,19 @@ import {
   ApiLoggerMiddleware,
   MultiTenancyRequestModifierMiddleware,
 } from './common/middlewares';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { StudentsModule } from './students/students.module';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // Automatically generate schema
+      playground: true, // Enable GraphQL Playground
+      include: [StudentsModule],
+    }),
     Repository,
     ConfigModule.forRoot({
       envFilePath: ['.env.local', '.env.production', '.env.development'],
@@ -64,6 +74,8 @@ import {
     TanantDatabaseModule,
 
     AuthModule,
+
+    StudentsModule,
   ],
   controllers: [AppController],
   providers: [

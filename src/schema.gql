@@ -1,0 +1,35 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Student {
+  id: ID!
+  name: String!
+  age: Float!
+  course: String!
+}
+
+type Query {
+  students: [Student!]!
+  student(id: String!): Student
+}
+
+type Mutation {
+  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
+  removeStudent(id: String!): Student!
+  createStudent(createStudentInput: CreateStudentInput!): Student!
+}
+
+input UpdateStudentInput {
+  id: ID!
+  name: String
+  age: Float
+  course: String
+}
+
+input CreateStudentInput {
+  id: ID!
+  name: String!
+  age: Float!
+  course: String!
+}

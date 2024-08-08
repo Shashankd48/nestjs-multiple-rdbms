@@ -1,0 +1,40 @@
+type Student {
+  # Example field (placeholder)
+  id: string;
+
+  name: string;
+
+  age: number;
+
+  course: string;
+
+  createdAt: Date | string;
+
+  updatedAt: Date | string;
+}
+
+input CreateStudentInput {
+  # Example field (placeholder)
+  id: string;
+
+  name: string;
+
+  age: number;
+
+  course: string;
+}
+
+input UpdateStudentInput {
+  id: String!
+}
+
+type Query {
+  students: [Student]!
+  student(id: String!): Student
+}
+
+type Mutation {
+  createStudent(createStudentInput: CreateStudentInput!): Student!
+  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
+  removeStudent(id: Int!): Student
+}
